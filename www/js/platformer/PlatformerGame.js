@@ -273,10 +273,10 @@
         var nextFileName = "assets/levels/" + this.levelIndex + ".txt";
         try {
             var instance = this;
-            window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+            window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, false);
 
             function gotFS(fileSystem) {
-                fileSystem.root.getFile(nextFileName, null, gotFileEntry, fail);
+                fileSystem.root.getFile(nextFileName, null, gotFileEntry, false);
             }
 
             function gotFileEntry(fileEntry) {
@@ -296,10 +296,7 @@
             }
 
             function fail(evt) {
-                if (evt.target)
-                    console.log(evt.target.error.code)
-                else
-                    console.log(evt);
+                 console.log(evt.target.error.code)
             }
         }
         catch (e) {
