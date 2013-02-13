@@ -270,7 +270,7 @@
         this.levelIndex = (this.levelIndex + 1) % numberOfLevels;
 
         // Searching where we are currently hosted
-        var nextFileName = "www/assets/levels/" + this.levelIndex + ".txt";
+        var nextFileName = "assets/levels/" + this.levelIndex + ".txt";
         try {
             var instance = this;
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
