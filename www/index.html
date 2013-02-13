@@ -1,42 +1,117 @@
-<!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
+﻿<!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>Hello World</title>
-    </head>
-    <body>
-        <div class="app">
-            <h1>PhoneGap</h1>
-            <div id="deviceready">
-                <p class="status pending blink">Connecting to Device</p>
-                <p class="status complete blink hide">Device is Ready</p>
-            </div>
-        </div>
-        <script type="text/javascript" src="phonegap.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+
+        <title>PhoneGap Platformer</title>
+
+        <link rel="stylesheet" href="master.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
+
+        <style type="text/css">      
+
+            #platformerCanvas
+            {
+                position: absolute;
+                background-color: Black;
+                top: 0px;
+                left: 0px;
+            }
+
+            html
+            {
+                height: 100%;
+            }
+            body
+            {
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+
+        <!-- Import EaselJS Framework -->
+        <script type="text/javascript" src="./js/easeljs/utils/UID.js"></script>
+        <script type="text/javascript" src="./js/easeljs/geom/Matrix2D.js"></script>
+        <script type="text/javascript" src="./js/easeljs/events/MouseEvent.js"></script>
+        <script type="text/javascript" src="./js/easeljs/utils/SpriteSheetUtils.js"></script>
+        <script type="text/javascript" src="./js/easeljs/display/SpriteSheet.js"></script>
+        <script type="text/javascript" src="./js/easeljs/display/Shadow.js"></script>
+        <script type="text/javascript" src="./js/easeljs/display/DisplayObject.js"></script>
+        <script type="text/javascript" src="./js/easeljs/display/Container.js"></script>
+        <script type="text/javascript" src="./js/easeljs/display/Stage.js"></script>
+        <script type="text/javascript" src="./js/easeljs/display/Bitmap.js"></script>
+        <script type="text/javascript" src="./js/easeljs/display/BitmapSequence.js"></script>
+        <script type="text/javascript" src="./js/easeljs/display/Text.js"></script>
+        <script type="text/javascript" src="./js/easeljs/utils/Ticker.js"></script>
+        <script type="text/javascript" src="./js/easeljs/geom/Rectangle.js"></script>
+        <script type="text/javascript" src="./js/easeljs/geom/Point.js"></script>
+        <!-- End EaselJS Imports -->
+
+        <script type="text/javascript" src="./js/platformer/XNARectangle.js"></script>
+        <script type="text/javascript" src="./js/platformer/PlatformerHelper.js"></script>
+        <script type="text/javascript" src="./js/platformer/ContentManager.js"></script>
+        <script type="text/javascript" src="./js/platformer/Tile.js"></script>
+        <script type="text/javascript" src="./js/platformer/Gem.js"></script>
+        <script type="text/javascript" src="./js/platformer/Enemy.js"></script>
+        <script type="text/javascript" src="./js/platformer/Player.js"></script>
+        <script type="text/javascript" src="./js/platformer/Level.js"></script>
+        <script type="text/javascript" src="./js/platformer/PlatformerGame.js"></script>
+
+        <!-- script type="text/javascript" charset="utf-8" src="phonegap-1.3.0.js"></script -->
+        <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+
         <script type="text/javascript">
-            app.initialize();
+            var canvas;
+            var stage = null;
+            var contentManager;
+            var platformerGame;
+            var globalCanvasContext;
+            var enableShadows = false;
+            var lastWidth;
+            var lastHeight;
+            var DELTA_RESIZE_UPDATE = 0;
+
+            var levelIndexToLoad = 0;
+
+            function init()
+            {
+                document.addEventListener("deviceready", onDeviceReady, false);
+            }
+
+            // once the device ready event fires, you can safely do your thing! -jm
+            function onDeviceReady() {
+                canvas = document.getElementById("platformerCanvas");
+                lastWidth = window.innerWidth;
+                lastHeight = window.innerHeight;
+                canvas.height = lastHeight;
+                canvas.width = lastWidth;
+                globalCanvasContext = canvas.getContext("2d");
+
+                stage = new Stage(canvas);
+
+                // downloading all needed images ressources and preloading sounds & music
+                contentManager = new ContentManager(stage, lastWidth, lastHeight);
+                contentManager.SetDownloadCompleted(startGame);
+                contentManager.StartDownload();
+            }
+
+            // Callback function once everything has been downloaded
+            function startGame() {
+                canvas.height = 0;
+                canvas.width = 0;
+                platformerGame = new PlatformerGame(stage, contentManager, lastWidth, lastHeight, 0);
+                platformerGame.StartGame();
+            }
         </script>
+
+    </head>
+    <body onLoad="init();">
+        <div class="fullscreen">
+            <canvas id="platformerCanvas">
+            </canvas>
+        </div>
     </body>
 </html>
