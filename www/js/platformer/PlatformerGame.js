@@ -28,7 +28,96 @@
     // Used in case of an HTTP issue or access denied on file://
     // This is a static level. So if you're looping always on the same level
     // You're stuck in the Matrix because of an exception somewhere... Up to you to find where!
-    var hardcodedErrorTextLevel = ".....................................................................................................................................................GGG.................###................................GGG.......GGG.......###...--..###........................1................X.####################";
+    var hardcodedErrorTextLevel =
+"....................\
+..........X.........\
+.......------.......\
+...--..........--...\
+..G..............G..\
+#:##..G.G.G.G....#:#\
+.......G.G.GBG......\
+......--------......\
+...--...........--..\
+....................\
+AG.G.D..............\
+###:######..........\
+....................\
+.1..GGGGGGGG..GGGCGG\
+#############.####:#";
+
+    var hardcodedLevel = [
+"\
+....................\
+....................\
+....................\
+....................\
+....................\
+....................\
+....................\
+.........GGG........\
+.........###........\
+....................\
+....GGG.......GGG...\
+....###.......###...\
+....................\
+.1...........A....X.\
+####################\
+"
+,
+"\
+....................\
+....................\
+..........X.........\
+.......######.......\
+..G..............G..\
+####..G.G.G.G....###\
+.......G.G.GCG......\
+......--------......\
+...--...........--..\
+......GGGG.GGGG.....\
+.G.G...GG..G....G.G.\
+####...GG..GGGG.####\
+.......GG..G........\
+.1....GGGG.GGGG.....\
+####################\
+"
+,
+"\
+....................\
+...G............X...\
+...--..G.......--...\
+....G.--........G...\
+...--..........--...\
+...G......G....G....\
+...--....--....--...\
+....G...........G...\
+...--........G.--...\
+...G........--.G....\
+...--..........--...\
+....G...........G...\
+...--..........--...\
+.1..................\
+####################\
+"
+,
+"\
+....................\
+..........X.........\
+.......------.......\
+...--..........--...\
+..G..............G..\
+#:##..G.G.G.G....#:#\
+.......G.G.GBG......\
+......--------......\
+...--...........--..\
+....................\
+AG.G.D..............\
+###:######..........\
+....................\
+.1..GGGGGGGG..GGGCGG\
+#############.####:#\
+"
+    ]:
 
     // Variables used to handle the overlay canvas to display "You died", "You win", etc.
     var statusCanvas = null;
@@ -119,7 +208,8 @@
         // otherwise we could use Ticker.addListener(stage);
         Ticker.addListener(this);
         // Targeting 60 FPS
-        Ticker.setInterval(17);
+        Ticker.setFPS(60);
+        //Ticker.setInterval(17);
     };
 
     PlatformerGame.prototype.UpdateRatio = function (gameWidth, gameHeight) {
@@ -303,7 +393,8 @@
             console.log("Error loading level: " + e.message);
             // Probably an access denied if you try to run from the file:// context
             // Loading the hard coded error level to have at least something to play with
-            this.LoadThisTextLevel(hardcodedErrorTextLevel);
+            //this.LoadThisTextLevel(hardcodedErrorTextLevel);
+            this.LoadThisTextLevel(hardcodedLevel[this.levelIndex]);
         }
     };
 
