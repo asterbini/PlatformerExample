@@ -363,10 +363,10 @@ AG.G.D..............\
         var nextFileName = "assets/levels/" + this.levelIndex + ".txt";
         try {
             var instance = this;
-            window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, false);
+            window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
 
             function gotFS(fileSystem) {
-                fileSystem.root.getFile(nextFileName, null, gotFileEntry, false);
+                fileSystem.root.getFile(nextFileName, null, gotFileEntry, fail);
             }
 
             function gotFileEntry(fileEntry) {
