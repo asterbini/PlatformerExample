@@ -7,10 +7,10 @@
 
     <!-- versionCode is optional and Android only -->
 
-    <name>PhoneGap Platformer game Example</name>
+    <name>PhoneGap Platformer</name>
 
     <description>
-        Esempio di PhoneGap application.
+        David Rousset's Platformer example.
     </description>
 
     <author href="https://www.di.uniroma1.it" email="sterbini@di.uniroma1.it">
@@ -19,7 +19,7 @@
 
     <feature name="http://api.phonegap.com/1.0/device" />
 
-    <preference name="phonegap-version" value="2.3.0" />
+    <preference name="phonegap-version" value="2.4.0" />
     <preference name="orientation"      value="landscape" />
     <preference name="target-device"    value="universal" />
     <preference name="fullscreen"       value="true" />
@@ -33,6 +33,7 @@
     <!-- to enable individual permissions use the following examples -->
     <feature name="http://api.phonegap.com/1.0/file"/>
     <feature name="http://api.phonegap.com/1.0/notification"/>
+    <feature name="http://api.phonegap.com/1.0/media"/>
 
 </widget>
 
