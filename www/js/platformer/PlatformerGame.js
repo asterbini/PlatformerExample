@@ -117,7 +117,7 @@ AG.G.D..............\
 .1..GGGGGGGG..GGGCGG\
 #############.####:#\
 "
-    ]:
+    ];
 
     // Variables used to handle the overlay canvas to display "You died", "You win", etc.
     var statusCanvas = null;
